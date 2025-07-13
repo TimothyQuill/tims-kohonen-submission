@@ -4,7 +4,7 @@ This project contains my solution to the kohonen coding challenge.
 
 Based on the codebase received in kohonen.png, I added 5 meaningful changes.
 
-1. Converted the code from procedural to object-oriented style
+1. Converted the code from procedural to object-oriented style 
 2. Improved readability, applying meaningful comments and variable names
 3. Used broadcasting to speed up the weight update process
 4. Added a Super class for extendability and reusability
