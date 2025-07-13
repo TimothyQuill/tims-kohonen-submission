@@ -1,6 +1,6 @@
-# Tim's Mantel Group challenge submission
+# Tim's kohonen submission
 
-This project contains my solution to Mantel's coding challenge.
+This project contains my solution to the kohonen coding challenge.
 
 Based on the codebase received in kohonen.png, I added 5 meaningful changes.
 
