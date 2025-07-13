@@ -144,10 +144,15 @@ class SelfOrganisingMap(Projection):
             raise ValueError("Input vector must be 1D.")
 
         try:
-            # Reshape input_sample to be (1, 1, length(input_sample))
-            bmu = utils.euclidean_distance(self.weights, input_sample)
-            min_index = np.unravel_index(bmu, (self.width, self.height))
-            return min_index
+            # Compute the squared Euclidean distance between the input and all weights
+            distances = utils.euclidean_distance(self.weights, input_sample)
+
+            # Find the index of the minimum distance (BMU)
+            flat_index = np.argmin(distances)
+
+            # Convert flat index to 2D coordinates
+            min_node = np.unravel_index(flat_index, (self.height, self.width))
+            return min_node
         except Exception as e:
             raise RuntimeError(f"Error finding BMU: {e}")
 
