@@ -6,23 +6,32 @@ import os
 This file contains utility functions that are used in the main.py file.
 """
 
-def euclidean_distance(input_vec: np.ndarray, weights: np.ndarray) -> np.ndarray:
+def euclidean_distance(v1: np.ndarray, v2: np.ndarray, axis: int = -1) -> np.ndarray:
     """
-    Computes the squared Euclidean distance between a 1D input vector and each node's weight vector in a 3D grid.
+    Computes the squared Euclidean distance between two arrays along a specified axis.
+
+    This function supports broadcasting and can handle:
+      - A single vector vs. a batch/grid of vectors
+      - Two arrays of matching shapes (e.g. pairwise comparisons)
 
     Args:
-        input_vec (np.ndarray): A 1D input vector of shape (k,)
-        weights (np.ndarray): A 3D weight grid of shape (height, width, k)
+        v1 (np.ndarray): First input array (can be any shape).
+        v2 (np.ndarray): Second input array (must be broadcastable with v1).
+        axis (int): Axis along which to compute the distance (default: -1).
 
     Returns:
-        np.ndarray: A 2D array of distances with shape (height, width)
+        np.ndarray: Array of squared distances.
     """
-    if input_vec.ndim != 1:
-        raise ValueError("input_vec must be a 1D array.")
-    if weights.ndim != 3 or weights.shape[2] != input_vec.shape[0]:
-        raise ValueError("weights must be a 3D array with shape (height, width, input_dim).")
+    if not isinstance(v1, np.ndarray) or not isinstance(v2, np.ndarray):
+        raise TypeError("Both inputs must be NumPy ndarrays.")
 
-    return np.sum((weights - input_vec) ** 2, axis=2)
+    try:
+        diff = v1 - v2
+        return np.sum(diff ** 2, axis=axis)
+    except ValueError as ve:
+        raise ValueError(f"Shape mismatch: {ve}")
+    except Exception as e:
+        raise RuntimeError(f"Error computing Euclidean distance: {e}")
 
 
 def output_image(data, path):
